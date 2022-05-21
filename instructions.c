@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   instructions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: het-tale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:19:43 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/21 01:09:38 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/21 23:19:21 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ t_stack	*new_node(int data)
 	return (node);
 }
 
-t_list	*new_list()
+t_list	*new_list(void)
 {
-	t_list *list;
+	t_list	*list;
 
 	list = malloc(sizeof(t_list));
 	list->head = NULL;
@@ -39,9 +39,9 @@ int	is_empty(t_list *stack)
 	return (0);
 }
 
-void	swap_stack_a(t_list *a)
+void	swap_stack(t_list *a)
 {
-	t_stack *temp;
+	t_stack	*temp;
 
 	temp = a->head;
 	while (temp != NULL)
@@ -55,32 +55,24 @@ void	swap_stack_a(t_list *a)
 		}
 		temp = temp->next;
 	}
+}
+
+void	swap_stack_a(t_list *a)
+{
+	swap_stack(a);
 	write(1, "sa\n", 3);
 }
 
 void	swap_stack_b(t_list *b)
 {
-	t_stack *temp;
-
-	temp = b->head;
-	while (temp != NULL)
-	{
-		if (temp->next->next == b->top)
-		{
-			b->top->next = temp->next;
-			temp->next->next = NULL;
-			temp->next = b->top;
-			break ;
-		}
-		temp = temp->next;
-	}
+	swap_stack(b);
 	write(1, "sb\n", 3);
 }
 
 void	swap_two_stacks(t_list *a, t_list *b)
 {
-	swap_stack_a(a);
-	swap_stack_b(b);
+	swap_stack(a);
+	swap_stack(b);
 	write(1, "ss\n", 3);
 }
 
@@ -95,6 +87,21 @@ void	push_stack(t_list *stack, t_stack *n)
 	{
 		stack->top->next = n;
 		stack->top = n;
+		n->next = NULL;
+	}
+}
+
+void	push_at_first(t_list *stack, t_stack *n)
+{
+	if (is_empty(stack))
+	{
+		stack->head = n;
+		stack->top = n;
+	}
+	else
+	{
+		n->next = stack->head;
+		stack->head = n;
 	}
 }
 
@@ -113,76 +120,91 @@ void	pop_stack(t_list *stack)
 		temp = temp->next;
 	}
 }
-void push_a(t_list *a, t_list *b)
+
+t_stack	*remove_first(t_list *stack)
+{
+	t_stack	*temp;
+
+	temp = stack->head;
+	stack->head = temp->next;
+	return (temp);
+}
+void	push_a(t_list *a, t_list *b)
 {
 	push_stack(a, b->top);
 	pop_stack(b);
 	write(1, "pa\n", 3);
 }
 
-void push_b(t_list *a, t_list *b)
+void	push_b(t_list *a, t_list *b)
 {
 	push_stack(b, a->top);
 	pop_stack(a);
 	write(1, "pb\n", 3);
 }
-void swap_two(t_list *a, t_stack *node1, t_stack *node2)
+
+void	swap_two(t_list *a, t_stack *node1, t_stack *node2)
 {
-  t_stack *prev1 = NULL;
-  t_stack *prev2 = NULL;
-  t_stack *curr1 = a->head;
-  t_stack *curr2 = a->head;
-  while (curr1 && curr1 != node1)
-  {
-    prev1 = curr1;
-    curr1 = curr1->next;
-  }
-   while (curr2 && curr2 != node2)
-  {
-    prev2 = curr2;
-    curr2 = curr2->next;
-  }
-  if (prev1 != NULL)
-        prev1->next = curr2;
-    else // Else make y as new head
-        a->head = curr2;
- 
-    // If y is not head of linked list
-    if (prev2 != NULL)
-        prev2->next = curr1;
-    else // Else make x as new head
-        a->head = curr1;
- 
-    // Swap next pointers
-    t_stack *temp = curr2->next;
-    curr2->next = curr1->next;
-    curr1->next = temp;
-  
+	t_stack	*prev1;
+	t_stack	*prev2;
+	t_stack	*curr1;
+	t_stack	*curr2;
+	t_stack	*temp;
+
+	prev1 = NULL;
+	prev2 = NULL;
+	curr1 = a->head;
+	curr2 = a->head;
+	if (!node1 || !node2)
+		return ;
+	while (curr1 && curr1 != node1)
+	{
+		prev1 = curr1;
+		curr1 = curr1->next;
+	}
+	while (curr2 && curr2 != node2)
+	{
+		prev2 = curr2;
+		curr2 = curr2->next;
+	}
+	if (prev1 != NULL)
+		prev1->next = curr2;
+	else
+		a->head = curr2;
+	if (prev2 != NULL)
+		prev2->next = curr1;
+	else
+		a->head = curr1;
+	temp = curr2->next;
+	curr2->next = curr1->next;
+	curr1->next = temp;
 }
 
-void rotate(t_list *a)
+void	rotate(t_list *a)
 {
-    t_stack    *temp;
-    t_stack    *temp2;
+	/*t_stack    *temp;
+	t_stack    *temp2;
 
-    temp = a->head;
-    while (temp != NULL)
-    {
+	temp = a->head;
+	while (temp != NULL)
+	{
         swap_two(a, temp, a->top);
         temp2 = a->top;
         a->top = temp;
         temp = temp2;
         temp = temp->next;
-    }
+    }*/
+	push_at_first(a, a->top);
+	pop_stack(a);
 }
 
-void rotate_a(t_list *a)
+void	rotate_a(t_list *a)
 {
 	rotate(a);
 	write(1, "ra\n", 3);
 }
 
-void rotate_b(t_list *a)
+void	rotate_b(t_list *a)
 {
 	rotate(a);
 	write(1, "rb\n", 3);
@@ -193,6 +215,44 @@ void	rotate_two(t_list *a, t_list *b)
 	rotate(a);
 	rotate(b);
 	write(1, "rr\n", 3);
+}
+
+void	rev_rotate(t_list *a)
+{
+    t_stack    *temp;
+    /*t_stack    *temp2;
+
+    temp = a->head;
+    while (temp != NULL)
+    {
+      temp2 = temp->next;
+      swap_two(a, temp, temp->next);
+      temp = temp2;
+      if (!temp)
+        break ;
+      temp = temp->next;
+    }*/
+	temp = remove_first(a);
+	push_stack(a, temp);
+}
+
+void	rev_rotate_a(t_list *a)
+{
+	rev_rotate(a);
+	write(1, "rra\n", 4);
+}
+
+void	rev_rotate_b(t_list *b)
+{
+	rev_rotate(b);
+	write(1, "rrb\n", 4);
+}
+
+void	rev_rotate_two(t_list *a, t_list *b)
+{
+	rev_rotate(a);
+	rev_rotate(b);
+	write(1, "rrr\n", 4);
 }
 void	traverse_stack(t_list *stack)
 {
@@ -231,7 +291,9 @@ int main()
 	//traverse_stack(stack_a);
 	//push_a(stack_a, stack_b);
 	//traverse_stack(stack_b);
-	rotate_two(stack_a, stack_a);
+	//rotate_a(stack_a);
+	//remove_first(stack_a);
+	rev_rotate_a(stack_a);
 	traverse_stack(stack_a);
 	return (0);
 }

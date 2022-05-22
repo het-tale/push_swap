@@ -6,7 +6,7 @@
 /*   By: het-tale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:43:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/22 03:59:13 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/22 20:09:45 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,10 @@ void	rev_rotate_a(t_list *a);
 void	rev_rotate_b(t_list *b);
 void	rev_rotate_two(t_list *a, t_list *b);
 void	traverse_stack(t_list *stack);
-
+int		ft_isinteger(char *s);
+void	check_error(int argc, char *argv[]);
+t_list	*get_stack(int argc, char *argv[], t_list *stack);
+void	ft_is_duplicated(t_list *stack);
+int		is_sorted(t_list *stack);
+int		ft_only_one(t_list *stack);
 #endif

@@ -1,33 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_push.c                                          :+:      :+:    :+:   */
+/*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: het-tale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/21 23:36:36 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/22 20:42:56 by het-tale         ###   ########.fr       */
+/*   Created: 2022/05/22 20:10:26 by het-tale          #+#    #+#             */
+/*   Updated: 2022/05/22 20:38:41 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	push_a(t_list *a, t_list *b)
-{
-	if (!is_empty(b))
-	{
-		push_stack(a, b->top);
-		pop_stack(b);
-		write(1, "pa\n", 3);
-	}
-}
-
-void	push_b(t_list *a, t_list *b)
-{
-	if (!is_empty(a))
-	{
-		push_stack(b, a->top);
-		pop_stack(a);
-		write(1, "pb\n", 3);
-	}
-}
+#include "libft/libft.h"

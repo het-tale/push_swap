@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ps_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: het-tale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 19:35:46 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/22 22:40:54 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/23 23:18:44 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ void	check_error(int argc, char *argv[])
 				write(2, "Error\n", 6);
 				exit(0);
 			}
+			free(split[i]);
 			i++;
 		}
 		j++;
+		free(split);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: het-tale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 03:40:53 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/23 02:14:10 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/23 23:53:11 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,25 @@ t_list	*get_stack(int argc, char *argv[], t_list *stack)
 			atoi = ft_atoi(split[i]);
 			temp = new_node(atoi);
 			push_at_first(stack, temp);
+			free(split[i]);
 			i++;
 		}
 		j++;
+		free(split);
 	}
 	return (stack);
+}
+
+void	ft_free(t_list *stack)
+{
+	t_stack	*temp;
+
+	temp = stack->head;
+	while (temp != NULL)
+	{
+		free(temp);
+		temp = temp->next;
+	}
 }
 
 int	main(int argc, char *argv[])
@@ -56,5 +70,7 @@ int	main(int argc, char *argv[])
 		}
 		traverse_stack(stack_a);
 	}
+	ft_free(stack_a);
+	free(stack_a);
 	return (0);
 }

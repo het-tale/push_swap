@@ -6,7 +6,7 @@
 /*   By: het-tale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:43:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/22 20:09:45 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/24 21:37:14 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ t_list	*get_stack(int argc, char *argv[], t_list *stack);
 void	ft_is_duplicated(t_list *stack);
 int		is_sorted(t_list *stack);
 int		ft_only_one(t_list *stack);
+t_list	*three_elements(t_list *a, t_list *b);
 #endif

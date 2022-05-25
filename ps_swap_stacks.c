@@ -6,7 +6,7 @@
 /*   By: het-tale <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 23:31:08 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/22 20:40:38 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/24 22:25:31 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 void	swap_stack(t_list *a)
 {
 	t_stack	*temp;
+	t_stack	*middle;
 
 	temp = a->head;
+	middle = temp->next;
 	while (temp != NULL)
 	{
 		if (temp->next->next == a->top)
@@ -24,6 +26,7 @@ void	swap_stack(t_list *a)
 			a->top->next = temp->next;
 			temp->next->next = NULL;
 			temp->next = a->top;
+			a->top = middle;
 			break ;
 		}
 		temp = temp->next;

@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 03:40:53 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/25 03:35:32 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:24:44 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	main(int argc, char *argv[])
 		{
 			if (size_a == 3)
 				stack_a = three_elements(stack_a);
+			// else if (size_a == 5)
+			// 	stack_a = five_elements(stack_a, stack_b, size_a);
 		}
 		traverse_stack(stack_a);
 	}

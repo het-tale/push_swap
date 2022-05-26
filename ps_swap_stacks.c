@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ps_swap_stacks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: het-tale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 23:31:08 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/24 22:25:31 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:20:08 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,24 @@
 void	swap_stack(t_list *a)
 {
 	t_stack	*temp;
-	t_stack	*middle;
+	t_stack	*parent;
 
+	parent = NULL;
 	temp = a->head;
-	middle = temp->next;
 	while (temp != NULL)
 	{
-		if (temp->next->next == a->top)
+		if (temp->next == a->top)
 		{
-			a->top->next = temp->next;
-			temp->next->next = NULL;
-			temp->next = a->top;
-			a->top = middle;
+			temp->next = NULL;
+			a->top->next = temp;
+			if (parent)
+				parent->next = a->top;
+			else
+				a->head = a->top;
+			a->top = temp;
 			break ;
 		}
+		parent = temp;
 		temp = temp->next;
 	}
 }

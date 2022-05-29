@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_push_rotate.c                                   :+:      :+:    :+:   */
+/*   ps_rotate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: het-tale <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 23:33:40 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/21 23:35:40 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:29:13 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	rotate(t_list *a)
 {
-	push_at_first(a, a->top);
+	t_stack	*top;
+
+	top = a->top;
 	pop_stack(a);
+	push_at_first(a, top);
 }
 
 void	rotate_a(t_list *a)

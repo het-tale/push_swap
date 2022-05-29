@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:43:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/27 02:01:27 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:37:26 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ void	ft_is_duplicated(t_list *stack);
 int		is_sorted(t_list *stack);
 int		ft_only_one(t_list *stack);
 t_list	*three_elements(t_list *a);
-t_list	*five_elements(t_list *a, t_list *b, int size);
+t_list	*five_element(t_list *a, t_list *b, int size);
+int		get_min_index(t_list *a, t_stack *min);
+t_stack	*get_min(t_list *a);
 #endif

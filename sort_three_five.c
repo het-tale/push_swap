@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 13:24:10 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/27 19:09:05 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/29 20:46:53 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 
 t_stack	*get_min(t_list *a)
 {
-	int	min;
-	int	index;
+	int		min;
 	t_stack	*temp;
 	t_stack	*small;
 
-	index = 0;
 	min = a->head->data;
 	temp = a->head->next;
 	small = a->head;
@@ -38,7 +36,7 @@ t_stack	*get_min(t_list *a)
 
 int	get_min_index(t_list *a, t_stack *min)
 {
-	int	index;
+	int		index;
 	t_stack	*temp;
 
 	index = 0;
@@ -52,12 +50,59 @@ int	get_min_index(t_list *a, t_stack *min)
 	}
 	return (index);
 }
+
+t_list	*three_elements(t_list *a)
+{
+	if (a->top->data > a->head->next->data
+		&& a->head->next->data < a->head->data && a->head->data > a->top->data)
+		swap_stack_a(a);
+	else if (a->top->data > a->head->next->data
+		&& a->head->next->data > a->head->data && a->top->data > a->head->data)
+	{
+		swap_stack_a(a);
+		rev_rotate_a(a);
+	}
+	else if (a->top->data > a->head->next->data
+		&& a->head->next->data < a->head->data && a->top->data > a->head->data)
+		rotate_a(a);
+	else if (a->top->data < a->head->next->data
+		&& a->head->next->data > a->head->data && a->head->data > a->top->data)
+	{
+		swap_stack_a(a);
+		rotate_a(a);
+	}
+	else
+		rev_rotate_a(a);
+	return (a);
+}
+
+static void	rotate_boucle(t_list *a, int size, int index, int i)
+{
+	if (size / 2 > index)
+	{
+		while (i < index + 1)
+		{
+			rev_rotate_a(a);
+			i++;
+		}
+	}
+	else
+	{
+		i = 0;
+		while (i < size - index - 1)
+		{
+			rotate_a(a);
+			i++;
+		}
+	}
+}
+
 t_list	*five_element(t_list *a, t_list *b, int size)
 {
 	t_stack	*min;
-	int	index;
-	int	i;
-	int	j;
+	int		index;
+	int		i;
+	int		j;
 
 	j = 0;
 	while (j < 2)
@@ -65,23 +110,7 @@ t_list	*five_element(t_list *a, t_list *b, int size)
 		min = get_min(a);
 		index = get_min_index(a, min);
 		i = 0;
-		if (size / 2 > index)
-		{
-			while (i < index + 1)
-			{
-				rev_rotate_a(a);
-				i++;
-			}
-		}
-		else
-		{
-			i = 0;
-			while (i < size - index - 1)
-			{
-				rotate_a(a);
-				i++;
-			}
-		}
+		rotate_boucle(a, size, index, i);
 		push_b(a, b);
 		size--;
 		j++;

@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:43:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/29 20:37:26 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/31 05:06:22 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,12 @@ t_list	*three_elements(t_list *a);
 t_list	*five_element(t_list *a, t_list *b, int size);
 int		get_min_index(t_list *a, t_stack *min);
 t_stack	*get_min(t_list *a);
+int		*copy_stack(t_list *a, int *k);
+int		lst_size(t_list *stack);
+int		*bubble_sort(int *k, int size);
+int		get_key_nbr(int *k, int size, int j);
+void	send_to_b(t_list *a, t_list *b, int key_nbr, int size);
+void	sort_small_stack(t_list *stack_a, t_list *stack_b, int size_a);
+t_list	*sort_100(t_list *a, t_list *b, int size);
+void	send_to_a(t_list *a, t_list *b, int size);
 #endif

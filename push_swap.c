@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 03:40:53 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/29 20:30:14 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/31 07:59:34 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,12 @@ void	sort_small_stack(t_list *stack_a, t_list *stack_b, int size_a)
 		stack_a = five_element(stack_a, stack_b, size_a);
 }
 
+void	sort_big_stack(t_list *stack_a, t_list *stack_b, int size_a)
+{
+	if (size_a > 10)
+		sort_100(stack_a, stack_b, size_a);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_list	*stack_a;
@@ -95,6 +101,8 @@ int	main(int argc, char *argv[])
 		{
 			if (size_a >= 2 && size_a <= 5)
 				sort_small_stack(stack_a, stack_b, size_a);
+			else
+				sort_big_stack(stack_a, stack_b, size_a);
 		}
 	}
 	ft_free(stack_a);

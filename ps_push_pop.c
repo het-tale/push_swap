@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 23:32:14 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/28 20:51:48 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/31 06:03:56 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,22 @@ void	pop_stack(t_list *stack)
 	t_stack	*temp;
 
 	temp = stack->head;
-	while (temp != NULL)
+	if (ft_only_one(stack))
 	{
-		if (temp->next == stack->top)
+		stack->head = NULL;
+		stack->top = NULL;
+	}
+	else
+	{
+		while (temp != NULL)
 		{
-			temp->next = NULL;
-			stack->top = temp;
+			if (temp->next == stack->top)
+			{
+				temp->next = NULL;
+				stack->top = temp;
+			}
+			temp = temp->next;
 		}
-		temp = temp->next;
 	}
 }
 

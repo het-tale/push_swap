@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 23:33:40 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/29 20:29:13 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/31 07:48:51 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,16 @@ void	rotate(t_list *a)
 
 void	rotate_a(t_list *a)
 {
+	if (ft_only_one(a))
+		return ;
 	rotate(a);
 	write(1, "ra\n", 3);
 }
 
 void	rotate_b(t_list *a)
 {
+	if (ft_only_one(a))
+		return ;
 	rotate(a);
 	write(1, "rb\n", 3);
 }

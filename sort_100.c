@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:09:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/31 08:08:29 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/31 09:58:45 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ t_list	*sort_100(t_list *a, t_list *b, int size)
 		size = lst_size(a);
 		if (size == 0)
 			break ;
-		if (size <= 5 && !is_empty(a))
+		if (size <= 10 && !is_empty(a))
 		{
 			if (!is_sorted(a))
 				sort_small_stack(a, stack_b, size);

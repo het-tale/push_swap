@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap_algo_2.c                                      :+:      :+:    :+:   */
+/*   sort_three_five.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 13:24:10 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/29 20:46:53 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/05/31 10:51:54 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,11 @@ t_list	*five_element(t_list *a, t_list *b, int size)
 	int		index;
 	int		i;
 	int		j;
+	int		loop;
 
 	j = 0;
-	while (j < 2)
+	loop = size - 3;
+	while (j < loop)
 	{
 		min = get_min(a);
 		index = get_min_index(a, min);
@@ -117,7 +119,8 @@ t_list	*five_element(t_list *a, t_list *b, int size)
 	}
 	if (!is_sorted(a))
 		three_elements(a);
-	push_a(a, b);
-	push_a(a, b);
+	j = 0;
+	while (j++ < loop)
+		push_a(a, b);
 	return (a);
 }

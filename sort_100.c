@@ -6,81 +6,12 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:09:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/31 09:58:45 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/02 04:28:10 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "push_swap.h"
-
-void	swap(int *a, int *b)
-{
-	int	temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
-int	*copy_stack(t_list *a, int *k)
-{
-	t_stack	*temp;
-	int		i;
-
-	temp = a->head;
-	i = 0;
-	while (temp != NULL)
-	{
-		k[i] = temp->data;
-		temp = temp->next;
-		i++;
-	}
-	return (k);
-}
-
-int	*bubble_sort(int *k, int size)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	
-  while(i < size)
-  {
-	j = 0;
-    while (j < size-i-1)
-	{
-		if (k[j] < k[j+1])
-			swap(&k[j], &k[j+1]);
-		j++;
-    }
-	i++;
-  }
-  return(k);
-}
-
-int	get_key_nbr(int *k, int size, int j)
-{
-	int	key_nbr;
-	int	index;
-	int	i;
-
-	index = size / j;
-	i = 0;
-	key_nbr = 0;
-	if (j == 1)
-		index--;
-	while (i < size)
-	{
-		if (index == i)
-		{
-			key_nbr = k[i];
-			break ;
-		}
-		i++;
-	}
-	return (key_nbr);
-}
 
 void	send_to_b(t_list *a, t_list *b, int key_nbr, int size)
 {
@@ -199,6 +130,53 @@ void	send_to_a(t_list *a, t_list *b, int size)
 	}
 }
 
+void sort_a(t_list *a, t_list *b, int size)
+{
+	t_stack	*min;
+	int		j;
+	int		s;
+	int		index;
+	int		i;
+
+	j = 0;
+	index = 0;
+	s = size;
+	i = 0;
+	while (j < s)
+	{
+		min = get_min(a);
+		index = get_min_index(a, min);
+		if (a->top->data == min->data)
+			push_b(a, b);
+		else
+		{
+			if (size / 2 > index)
+			{
+				i = 0;
+				while (i < index + 1)
+				{
+					rev_rotate_a(a);
+					i++;
+				}
+			}
+			else
+			{
+				i = 0;
+				while (i < size - index - 1)
+				{
+					rotate_a(a);
+					i++;
+				}
+			}
+			push_b(a, b);
+		}
+		size--;
+		j++;
+		if (is_empty(a))
+			break ;
+	}
+}
+
 t_list	*sort_100(t_list *a, t_list *b, int size)
 {
 	int		key_nbr;
@@ -209,27 +187,21 @@ t_list	*sort_100(t_list *a, t_list *b, int size)
 	int		s;
 
 	i = 0;
-	k = 4;
+	k = 1;
 	s = size;
 	stack_b = new_list();
 	copy = malloc(size * sizeof(int));
 	copy = copy_stack(a, copy);
-	while (i < s / 4)
+	copy = bubble_sort(copy, s);
+	while (i < 3)
 	{
 		key_nbr = get_key_nbr(copy, s, k);
-		k /= 2;
+		k++;
 		send_to_b(a, b, key_nbr, s);
-		size = lst_size(a);
-		if (size == 0)
-			break ;
-		if (size <= 10 && !is_empty(a))
-		{
-			if (!is_sorted(a))
-				sort_small_stack(a, stack_b, size);
-			break ;
-		}
 		i++;
 	}
+	size = lst_size(a);
+	sort_a(a, b, size);
 	send_to_a(a, b, lst_size(b));
 	return (a);
 }

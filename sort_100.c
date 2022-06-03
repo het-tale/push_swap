@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:09:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/02 04:28:10 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/03 01:04:44 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,35 @@ void	send_to_b(t_list *a, t_list *b, int key_nbr, int size)
 		if (temp->data <= key_nbr)
 		{
 			index = get_min_index(a, temp);
-			if (index < size / 2)
+			if (temp->data == a->top->data)
+				push_b(a, b);
+			else if (temp->next->data == a->top->data)
 			{
-				i = 0;
-				while (i < index + 1)
-				{
-					rev_rotate_a(a);
-					i++;
-				}
+				swap_stack_a(a);
+				push_b(a, b);
 			}
 			else
 			{
-				i = 0;
-				while (i < size - index - 1)
+				if (index < size / 2)
 				{
-					rotate_a(a);
-					i++;
+					i = 0;
+					while (i < index + 1)
+					{
+						rev_rotate_a(a);
+						i++;
+					}
 				}
+				else
+				{
+					i = 0;
+					while (i < size - index - 1)
+					{
+						rotate_a(a);
+						i++;
+					}
+				}
+				push_b(a, b);
 			}
-			push_b(a, b);
 			tmp = a->head;
 			size--;
 		}
@@ -101,6 +111,11 @@ void	send_to_a(t_list *a, t_list *b, int size)
 		index = get_min_index(b, max);
 		if (b->top->data == max->data)
 			push_a(a, b);
+		else if (max->next->data == b->top->data)
+		{
+			swap_stack_b(b);
+			push_a(a, b);
+		}
 		else
 		{
 			if (size / 2 > index)
@@ -148,6 +163,11 @@ void sort_a(t_list *a, t_list *b, int size)
 		index = get_min_index(a, min);
 		if (a->top->data == min->data)
 			push_b(a, b);
+		else if (min->next->data == a->top->data)
+		{
+			swap_stack_a(a);
+			push_b(a, b);
+		}
 		else
 		{
 			if (size / 2 > index)

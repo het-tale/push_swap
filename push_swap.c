@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 03:40:53 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/02 04:12:55 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/03 19:22:40 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	ft_free(t_list *stack)
 {
 	t_stack	*temp;
 
-	temp = stack->head;
-	while (temp != NULL)
+	while (stack->head)
 	{
+		temp = stack->head;
+		stack->head = stack->head->next;
 		free(temp);
-		temp = temp->next;
 	}
 }
 

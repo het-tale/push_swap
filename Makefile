@@ -6,7 +6,7 @@
 #    By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 03:23:24 by het-tale          #+#    #+#              #
-#    Updated: 2022/05/26 20:23:59 by het-tale         ###   ########.fr        #
+#    Updated: 2022/06/03 18:57:03 by het-tale         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ CC        =    gcc
 all : $(NAME)
 
 $(NAME) :
-	$(CC) $(FLAGS) $(SRCS) -o $(NAME)
+	$(CC) $(FLAGS) $(SRCS) -o $(NAME) -g -fsanitize=address
 
 clean :
 	${RM} ${OBJCT}

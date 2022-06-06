@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:09:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/03 22:42:10 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/06 01:52:39 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,81 +60,68 @@ void	rotate_conditions(t_list *a, t_list *b, int index, int size)
 	push_a(a, b);
 }
 
-void	send_to_a(t_list *a, t_list *b, int size)
+int	*interval(int key_nbr, int *copy, int size)
 {
-	t_stack	*max;
-	int		index;
-	int		j;
-	int		s;
+	int	start;
+	int	end;
+	int	*inter;
+	int	mid;
 
-	j = 0;
-	s = size;
-	while (j < s)
+	mid = size / 2;
+	inter = malloc(2 * sizeof(int));
+	if (mid - key_nbr < 0)
+			start = copy[0];
+	else
+		start = copy[mid - key_nbr];
+	if (mid + key_nbr > size - 1)
+		end = copy[size - 1];
+	else
+		end = copy[mid + key_nbr];
+	inter[0] = start;
+	inter[1] = end;
+	return (inter);
+}
+
+void	send_to_b(t_list *a, t_list *b, t_vars vars, int size)
+{
+	while (lst_size(b) < 2 * vars.key_nbr)
 	{
-		max = get_max(b);
-		index = get_min_index(b, max);
-		if (b->top->data == max->data)
-			push_a(a, b);
-		else if (max->next->data == b->top->data)
+		if (a->top->data >= vars.inter[0]
+			&& a->top->data <= vars.inter[1])
 		{
-			swap_stack_b(b);
-			push_a(a, b);
+			push_b(a, b);
+			if (b->top->data < vars.copy[size / 2])
+				rotate_b(b);
 		}
 		else
-			rotate_conditions(a, b, index, size);
-		size--;
-		j++;
-		if (is_empty(b))
-			break ;
+			rotate_a(a);
 	}
 }
 
 t_list	*sort_100(t_list *a, t_list *b, int size)
 {
-	int		key_nbr;
-	int		*copy;
-	int		start;
-	int		end;
-	int		key;
+	t_vars	vars;
 
-	copy = malloc(size * sizeof(int));
-	copy = copy_stack(a, copy);
-	copy = bubble_sort(copy, size);
-	key_nbr = size / 8;
-	key = key_nbr;
+	vars.copy = malloc(size * sizeof(int));
+	vars.copy = copy_stack(a, vars.copy);
+	vars.copy = bubble_sort(vars.copy, size);
+	vars.key_nbr = size / 8;
+	vars.key = vars.key_nbr;
 	while (!is_empty(a))
 	{
-		if (size / 2 - key_nbr < 0)
-			start = copy[0];
-		else
-			start = copy[size / 2 - key_nbr];
-		if (size / 2 + key_nbr > size - 1)
-			end = copy[size - 1];
-		else
-			end = copy[size / 2 + key_nbr];
-		if (size / 2 - key_nbr < 0 && size / 2 + key_nbr > size - 1)
+		vars.inter = interval(vars.key_nbr, vars.copy, size);
+		if (size / 2 - vars.key_nbr < 0 && size / 2 + vars.key_nbr > size - 1)
 		{
 			while (!is_empty(a))
 			{
 				push_b(a, b);
-				if (b->top->data < copy[size / 2])
+				if (b->top->data < vars.copy[size / 2])
 					rotate_b(b);
 			}
 			break ;
 		}
-		while (lst_size(b) < 2 * key_nbr)
-		{
-			is_exist(b, a->top, copy, start, end, a);
-			if (a->top->data >= start && a->top->data <= end)
-			{
-				push_b(a, b);
-				if (b->top->data < copy[size / 2])
-					rotate_b(b);
-			}
-			else
-				rotate_a(a);
-		}
-		key_nbr += key;
+		send_to_b(a, b, vars, size);
+		vars.key_nbr += vars.key;
 	}
 	send_to_a(a, b, lst_size(b));
 	return (a);

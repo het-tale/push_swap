@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:43:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/03 22:43:25 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/06 01:51:47 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ typedef struct s_list
 	t_stack	*head;
 	t_stack	*top;
 }	t_list;
+
+typedef struct s_vars
+{
+	int		key_nbr;
+	int		*copy;
+	int		key;
+	int		*inter;
+}	t_vars;
+
 t_stack	*new_node(int data);
 t_list	*new_list(void);
 int		is_empty(t_list *stack);
@@ -59,6 +68,7 @@ t_list	*three_elements(t_list *a);
 t_list	*five_element(t_list *a, t_list *b, int size);
 int		get_min_index(t_list *a, t_stack *min);
 t_stack	*get_min(t_list *a);
+t_stack	*get_max(t_list *a);
 int		*copy_stack(t_list *a, int *k);
 int		lst_size(t_list *stack);
 int		*bubble_sort(int *k, int size);
@@ -67,4 +77,5 @@ void	sort_small_stack(t_list *stack_a, t_list *stack_b, int size_a);
 t_list	*sort_100(t_list *a, t_list *b, int size);
 void	send_to_a(t_list *a, t_list *b, int size);
 void	sort_a(t_list *a, t_list *b, int size);
+void	rotate_conditions(t_list *a, t_list *b, int index, int size);
 #endif

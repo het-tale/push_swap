@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:09:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/06 01:52:39 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:38:41 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@ void	send_to_b(t_list *a, t_list *b, t_vars vars, int size)
 	}
 }
 
-t_list	*sort_100(t_list *a, t_list *b, int size)
+t_list	*sort_100(t_list *a, t_list *b, int size, int chunk)
 {
 	t_vars	vars;
 
 	vars.copy = malloc(size * sizeof(int));
 	vars.copy = copy_stack(a, vars.copy);
 	vars.copy = bubble_sort(vars.copy, size);
-	vars.key_nbr = size / 8;
+	vars.key_nbr = size / chunk;
 	vars.key = vars.key_nbr;
 	while (!is_empty(a))
 	{

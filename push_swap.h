@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:43:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/06 01:51:47 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:40:03 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		lst_size(t_list *stack);
 int		*bubble_sort(int *k, int size);
 int		get_key_nbr(int *k, int size, int j);
 void	sort_small_stack(t_list *stack_a, t_list *stack_b, int size_a);
-t_list	*sort_100(t_list *a, t_list *b, int size);
+t_list	*sort_100(t_list *a, t_list *b, int size, int chunk);
 void	send_to_a(t_list *a, t_list *b, int size);
 void	sort_a(t_list *a, t_list *b, int size);
 void	rotate_conditions(t_list *a, t_list *b, int index, int size);

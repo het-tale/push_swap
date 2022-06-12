@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 13:24:10 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/31 10:51:54 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:02:07 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,37 @@ t_list	*three_elements(t_list *a)
 {
 	if (a->top->data > a->head->next->data
 		&& a->head->next->data < a->head->data && a->head->data > a->top->data)
+	{
 		swap_stack_a(a);
+		print_inst("sa\n");
+	}
 	else if (a->top->data > a->head->next->data
 		&& a->head->next->data > a->head->data && a->top->data > a->head->data)
 	{
 		swap_stack_a(a);
+		print_inst("sa\n");
 		rev_rotate_a(a);
+		print_inst("rra\n");
 	}
 	else if (a->top->data > a->head->next->data
 		&& a->head->next->data < a->head->data && a->top->data > a->head->data)
+	{
 		rotate_a(a);
+		print_inst("ra\n");
+	}
 	else if (a->top->data < a->head->next->data
 		&& a->head->next->data > a->head->data && a->head->data > a->top->data)
 	{
 		swap_stack_a(a);
+		print_inst("sa\n");
 		rotate_a(a);
+		print_inst("ra\n");
 	}
 	else
+	{
 		rev_rotate_a(a);
+		print_inst("rra\n");
+	}
 	return (a);
 }
 
@@ -83,6 +96,7 @@ static void	rotate_boucle(t_list *a, int size, int index, int i)
 		while (i < index + 1)
 		{
 			rev_rotate_a(a);
+			print_inst("rra\n");
 			i++;
 		}
 	}
@@ -92,6 +106,7 @@ static void	rotate_boucle(t_list *a, int size, int index, int i)
 		while (i < size - index - 1)
 		{
 			rotate_a(a);
+			print_inst("ra\n");
 			i++;
 		}
 	}
@@ -114,6 +129,7 @@ t_list	*five_element(t_list *a, t_list *b, int size)
 		i = 0;
 		rotate_boucle(a, size, index, i);
 		push_b(a, b);
+		print_inst("pb\n");
 		size--;
 		j++;
 	}
@@ -121,6 +137,9 @@ t_list	*five_element(t_list *a, t_list *b, int size)
 		three_elements(a);
 	j = 0;
 	while (j++ < loop)
+	{
 		push_a(a, b);
+		print_inst("pa\n");
+	}
 	return (a);
 }

@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:09:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/12 15:17:03 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/12 19:11:05 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	rotate_conditions(t_list *a, t_list *b, int index, int size)
 		while (i < index + 1)
 		{
 			rev_rotate_b(b);
+			print_inst("rrb\n");
 			i++;
 		}
 	}
@@ -54,10 +55,12 @@ void	rotate_conditions(t_list *a, t_list *b, int index, int size)
 		while (i < size - index - 1)
 		{
 			rotate_b(b);
+			print_inst("rb\n");
 			i++;
 		}
 	}
 	push_a(a, b);
+	print_inst("pa\n");
 }
 
 int	*interval(int key_nbr, int *copy, int size)
@@ -93,27 +96,37 @@ void	send_to_b(t_list *a, t_list *b, t_vars vars, int size)
 			&& (a->top->data >= vars.inter[0] && a->top->data <= vars.inter[1]))
 			index++;
 		if (a->top->data >= vars.copy[size - 3] && a->top->data <= vars.copy[size - 1])
+		{
 			rotate_a(a);
+			print_inst("ra\n");
+		}
 		else if (a->top->data >= vars.inter[0]
 			&& a->top->data <= vars.inter[1])
 		{
 			push_b(a, b);
+			print_inst("pb\n");
 			if (b->top->data < vars.copy[size / 2])
+			{
 				rotate_b(b);
+				print_inst("rb\n");
+			}
 		}
 		else
+		{
 			rotate_a(a);
+			print_inst("ra\n");
+		}
 	}
 }
 
-t_list	*sort_100(t_list *a, t_list *b, int size)
+t_list	*sort_100(t_list *a, t_list *b, int size, int chunk)
 {
 	t_vars	vars;
-
+	(void)chunk;
 	vars.copy = malloc(size * sizeof(int));
 	vars.copy = copy_stack(a, vars.copy);
 	vars.copy = bubble_sort(vars.copy, size);
-	vars.key_nbr = size / 18;
+	vars.key_nbr = chunk;
 	vars.key = vars.key_nbr;
 	while (lst_size(a) > 3)
 	{
@@ -123,8 +136,12 @@ t_list	*sort_100(t_list *a, t_list *b, int size)
 		if (size / 2 - vars.key_nbr < 0 && size / 2 + vars.key_nbr > size - 1)
 		{
 			push_b(a, b);
+			print_inst("pb\n");
 			if (b->top->data < vars.copy[size / 2])
+			{
 				rotate_b(b);
+				print_inst("rb\n");
+			}
 		}
 		send_to_b(a, b, vars, size);
 		vars.key_nbr += vars.key;

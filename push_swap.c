@@ -6,39 +6,12 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 03:40:53 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/12 15:12:17 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/12 19:15:28 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "libft/libft.h"
-
-t_list	*get_stack(int argc, char *argv[], t_list *stack)
-{
-	int		i;
-	int		j;
-	char	**split;
-	int		atoi;
-	t_stack	*temp;
-
-	j = 1;
-	while (j < argc)
-	{
-		split = ft_split(argv[j], ' ');
-		i = 0;
-		while (split[i])
-		{
-			atoi = ft_atoi(split[i]);
-			temp = new_node(atoi);
-			push_at_first(stack, temp);
-			free(split[i]);
-			i++;
-		}
-		j++;
-		free(split);
-	}
-	return (stack);
-}
 
 void	ft_free(t_list *stack)
 {
@@ -70,7 +43,10 @@ int	lst_size(t_list *stack)
 void	sort_small_stack(t_list *stack_a, t_list *stack_b, int size_a)
 {
 	if (size_a == 2)
+	{
 		swap_stack_a(stack_a);
+		print_inst("sa\n");
+	}
 	else if (size_a == 3)
 		stack_a = three_elements(stack_a);
 	else if (size_a >= 4 && size_a <= 10)
@@ -79,8 +55,19 @@ void	sort_small_stack(t_list *stack_a, t_list *stack_b, int size_a)
 
 void	sort_big_stack(t_list *stack_a, t_list *stack_b, int size_a)
 {
-	if (size_a > 10)
-		sort_100(stack_a, stack_b, size_a);
+	int	chunk;
+
+	chunk = 0;
+	if (size_a > 10 && size_a <= 100)
+	{
+		chunk = size_a / 8;
+		sort_100(stack_a, stack_b, size_a, chunk);
+	}
+	else
+	{
+		chunk = size_a / 18;
+		sort_100(stack_a, stack_b, size_a, chunk);
+	}
 }
 
 int	main(int argc, char *argv[])

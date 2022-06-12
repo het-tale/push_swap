@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 02:23:05 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/12 15:20:03 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:01:15 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,14 @@ void	send_to_a(t_list *a, t_list *b, int size, t_vars vars)
 		if (b->top && b->top->data == vars.copy[index])
 		{
 			push_a(a, b);
+			print_inst("pa\n");
 			index--;
 			size--;
 		}
 		else if (a->head && j != 0 && a->head->data == vars.copy[index])
 		{
 			rev_rotate_a(a);
+			print_inst("rra\n");
 			j--;
 			index--;
 		}
@@ -126,7 +128,9 @@ void	send_to_a(t_list *a, t_list *b, int size, t_vars vars)
 			(b->top && a->head && b->top->data > a->head->data && j != 0))
 		{
 			push_a(a, b);
+			print_inst("pa\n");
 			rotate_a(a);
+			print_inst("ra\n");
 			j++;
 			size--;
 		}
@@ -136,16 +140,24 @@ void	send_to_a(t_list *a, t_list *b, int size, t_vars vars)
 			if (in < lst_size(b) / 2)
 			{
 				while (b->top->data != vars.copy[index])
+				{
 					rev_rotate_b(b);
+					print_inst("rrb\n");
+				}
 				push_a(a, b);
+				print_inst("pa\n");
 				size--;
 				index--;
 			}
 			else
 			{
 				while (b->top->data != vars.copy[index])
+				{
 					rotate_b(b);
+					print_inst("rb\n");
+				}
 				push_a(a, b);
+				print_inst("pa\n");
 				size--;
 				index--;			
 			}

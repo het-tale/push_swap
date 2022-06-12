@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 02:23:05 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/08 12:44:42 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:20:03 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,31 +81,74 @@ int	get_key_nbr(int *k, int size, int j)
 	return (key_nbr);
 }
 
-void	send_to_a(t_list *a, t_list *b, int size)
+int	get_index(t_list *a, int min)
 {
-	t_stack	*max;
+	int		index;
+	t_stack	*temp;
+
+	index = 0;
+	temp = a->head;
+	while (temp != NULL)
+	{
+		if (min == temp->data)
+			return (index);
+		index++;
+		temp = temp->next;
+	}
+	index = -1;
+	return (index);
+}
+
+void	send_to_a(t_list *a, t_list *b, int size, t_vars vars)
+{
+	int		in;
 	int		index;
 	int		j;
-	int		s;
 
 	j = 0;
-	s = size;
-	while (j < s)
+	in = 0;
+	index = size - 1;
+	while (index >= 0)
 	{
-		max = get_max(b);
-		index = get_min_index(b, max);
-		if (b->top->data == max->data)
-			push_a(a, b);
-		else if (max->next->data == b->top->data)
+		if (b->top && b->top->data == vars.copy[index])
 		{
-			swap_stack_b(b);
 			push_a(a, b);
+			index--;
+			size--;
+		}
+		else if (a->head && j != 0 && a->head->data == vars.copy[index])
+		{
+			rev_rotate_a(a);
+			j--;
+			index--;
+		}
+		else if (j == 0 ||
+			(b->top && a->head && b->top->data > a->head->data && j != 0))
+		{
+			push_a(a, b);
+			rotate_a(a);
+			j++;
+			size--;
 		}
 		else
-			rotate_conditions(a, b, index, size);
-		size--;
-		j++;
-		if (is_empty(b))
-			break ;
+		{
+			in = get_index(b, vars.copy[index]);
+			if (in < lst_size(b) / 2)
+			{
+				while (b->top->data != vars.copy[index])
+					rev_rotate_b(b);
+				push_a(a, b);
+				size--;
+				index--;
+			}
+			else
+			{
+				while (b->top->data != vars.copy[index])
+					rotate_b(b);
+				push_a(a, b);
+				size--;
+				index--;			
+			}
+		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 03:40:53 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/08 12:43:11 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:12:17 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,21 @@ void	ft_free(t_list *stack)
 	}
 }
 
+int	lst_size(t_list *stack)
+{
+	int		size;
+	t_stack	*temp;
+
+	temp = stack->head;
+	size = 0;
+	while (temp != NULL)
+	{
+		size++;
+		temp = temp->next;
+	}
+	return (size);
+}
+
 void	sort_small_stack(t_list *stack_a, t_list *stack_b, int size_a)
 {
 	if (size_a == 2)
@@ -64,10 +79,8 @@ void	sort_small_stack(t_list *stack_a, t_list *stack_b, int size_a)
 
 void	sort_big_stack(t_list *stack_a, t_list *stack_b, int size_a)
 {
-	if (size_a > 10 && size_a <= 100)
-		sort_100(stack_a, stack_b, size_a, 8);
-	else if (size_a > 100)
-		sort_100(stack_a, stack_b, size_a, 18);
+	if (size_a > 10)
+		sort_100(stack_a, stack_b, size_a);
 }
 
 int	main(int argc, char *argv[])
@@ -94,5 +107,7 @@ int	main(int argc, char *argv[])
 	}
 	ft_free(stack_a);
 	free(stack_a);
+	ft_free(stack_b);
+	free(stack_b);
 	return (0);
 }

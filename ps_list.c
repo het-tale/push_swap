@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 23:29:35 by het-tale          #+#    #+#             */
-/*   Updated: 2022/05/26 18:28:22 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/13 12:12:33 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,19 @@ int	is_empty(t_list *stack)
 	if (stack->top == NULL)
 		return (1);
 	return (0);
+}
+
+int	lst_size(t_list *stack)
+{
+	int		size;
+	t_stack	*temp;
+
+	temp = stack->head;
+	size = 0;
+	while (temp != NULL)
+	{
+		size++;
+		temp = temp->next;
+	}
+	return (size);
 }

@@ -6,7 +6,7 @@
 #    By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 03:23:24 by het-tale          #+#    #+#              #
-#    Updated: 2022/06/12 18:39:17 by het-tale         ###   ########.fr        #
+#    Updated: 2022/06/13 12:16:24 by het-tale         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME_BONUS    =    checker
 BONUS_DIR = bonus
 SRCS    =    libft/*.c *.c
 
-SRCB    =    libft/*.c bonus/*.c bonus/gnl/*.c ps*.c
+SRCB    =    libft/*.c bonus/*.c bonus/gnl/*.c ps*.c sort_big_stack_utils*.c sort_three_five.c
 
 OBJCT    =    ${SRCS:.c=.o}
 
@@ -42,7 +42,7 @@ clean :
 
 fclean : clean
 	${RM} ${NAME}
-	${RM} ${BONUS_DIR}/${NAME_BONUS}
+	${RM} ${NAME_BONUS}
 
 re : fclean all
 

@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 02:23:05 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/12 18:01:15 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:37:09 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,6 @@ void	swap(int *a, int *b)
 	temp = *a;
 	*a = *b;
 	*b = temp;
-}
-
-int	*copy_stack(t_list *a, int *k)
-{
-	t_stack	*temp;
-	int		i;
-
-	temp = a->head;
-	i = 0;
-	while (temp != NULL)
-	{
-		k[i] = temp->data;
-		temp = temp->next;
-		i++;
-	}
-	return (k);
 }
 
 int	*bubble_sort(int *k, int size)
@@ -101,66 +85,14 @@ int	get_index(t_list *a, int min)
 
 void	send_to_a(t_list *a, t_list *b, int size, t_vars vars)
 {
-	int		in;
-	int		index;
-	int		j;
+	t_ind	ind;
 
-	j = 0;
-	in = 0;
-	index = size - 1;
-	while (index >= 0)
+	ind.j = 0;
+	ind.in = 0;
+	ind.index = size - 1;
+	while (ind.index >= 0)
 	{
-		if (b->top && b->top->data == vars.copy[index])
-		{
-			push_a(a, b);
-			print_inst("pa\n");
-			index--;
-			size--;
-		}
-		else if (a->head && j != 0 && a->head->data == vars.copy[index])
-		{
-			rev_rotate_a(a);
-			print_inst("rra\n");
-			j--;
-			index--;
-		}
-		else if (j == 0 ||
-			(b->top && a->head && b->top->data > a->head->data && j != 0))
-		{
-			push_a(a, b);
-			print_inst("pa\n");
-			rotate_a(a);
-			print_inst("ra\n");
-			j++;
-			size--;
-		}
-		else
-		{
-			in = get_index(b, vars.copy[index]);
-			if (in < lst_size(b) / 2)
-			{
-				while (b->top->data != vars.copy[index])
-				{
-					rev_rotate_b(b);
-					print_inst("rrb\n");
-				}
-				push_a(a, b);
-				print_inst("pa\n");
-				size--;
-				index--;
-			}
-			else
-			{
-				while (b->top->data != vars.copy[index])
-				{
-					rotate_b(b);
-					print_inst("rb\n");
-				}
-				push_a(a, b);
-				print_inst("pa\n");
-				size--;
-				index--;			
-			}
-		}
+		if (check_conditions(a, b, &ind, vars) == 1)
+			b_rotation(a, b, &ind, vars);
 	}
 }

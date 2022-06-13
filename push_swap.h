@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:43:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/12 18:58:43 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:47:43 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,15 @@ typedef struct s_vars
 	int		*copy;
 	int		key;
 	int		*inter;
+	int		index;
 }	t_vars;
+
+typedef struct s_ind
+{
+	int		in;
+	int		index;
+	int		j;
+}	t_ind;
 
 t_stack	*new_node(int data);
 t_list	*new_list(void);
@@ -79,4 +87,11 @@ void	send_to_a(t_list *a, t_list *b, int size, t_vars s_vars);
 void	sort_a(t_list *a, t_list *b, int size);
 void	rotate_conditions(t_list *a, t_list *b, int index, int size);
 void	print_inst(char *instruction);
+void	get_copy_stack(t_list *a, t_vars *vars, int size, int chunk);
+int		check_max_three(t_list *a, t_vars *vars, int size);
+void	b_rotation(t_list *a, t_list *b, t_ind *ind, t_vars vars);
+int		check_conditions(t_list *a, t_list *b, t_ind *ind, t_vars vars);
+int		get_index(t_list *a, int min);
+void	instructions(t_list *a, int d);
+void	sort_push_5(t_list *a, t_list *b, int loop);
 #endif

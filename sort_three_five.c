@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 13:24:10 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/12 18:02:07 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:57:39 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,16 @@ t_list	*three_elements(t_list *a)
 {
 	if (a->top->data > a->head->next->data
 		&& a->head->next->data < a->head->data && a->head->data > a->top->data)
-	{
-		swap_stack_a(a);
-		print_inst("sa\n");
-	}
+		instructions(a, 0);
 	else if (a->top->data > a->head->next->data
 		&& a->head->next->data > a->head->data && a->top->data > a->head->data)
-	{
-		swap_stack_a(a);
-		print_inst("sa\n");
-		rev_rotate_a(a);
-		print_inst("rra\n");
-	}
+		instructions(a, 1);
 	else if (a->top->data > a->head->next->data
 		&& a->head->next->data < a->head->data && a->top->data > a->head->data)
-	{
-		rotate_a(a);
-		print_inst("ra\n");
-	}
+		instructions(a, 2);
 	else if (a->top->data < a->head->next->data
 		&& a->head->next->data > a->head->data && a->head->data > a->top->data)
-	{
-		swap_stack_a(a);
-		print_inst("sa\n");
-		rotate_a(a);
-		print_inst("ra\n");
-	}
+		instructions(a, 3);
 	else
 	{
 		rev_rotate_a(a);
@@ -133,13 +117,6 @@ t_list	*five_element(t_list *a, t_list *b, int size)
 		size--;
 		j++;
 	}
-	if (!is_sorted(a))
-		three_elements(a);
-	j = 0;
-	while (j++ < loop)
-	{
-		push_a(a, b);
-		print_inst("pa\n");
-	}
+	sort_push_5(a, b, loop);
 	return (a);
 }

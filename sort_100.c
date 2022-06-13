@@ -6,33 +6,12 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:09:15 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/12 19:11:05 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:01:33 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "push_swap.h"
-
-t_stack	*get_max(t_list *a)
-{
-	int		max;
-	t_stack	*temp;
-	t_stack	*big;
-
-	max = a->head->data;
-	temp = a->head->next;
-	big = a->head;
-	while (temp != NULL)
-	{
-		if (temp->data > max)
-		{
-			max = temp->data;
-			big = temp;
-		}
-		temp = temp->next;
-	}
-	return (big);
-}
 
 void	rotate_conditions(t_list *a, t_list *b, int index, int size)
 {
@@ -87,70 +66,63 @@ int	*interval(int key_nbr, int *copy, int size)
 
 void	send_to_b(t_list *a, t_list *b, t_vars vars, int size)
 {
-	int	index;
-
-	index = 0;
-	while (lst_size(b) < (2 * vars.key_nbr) - index)
+	while (lst_size(b) < (2 * vars.key_nbr) - vars.index)
 	{
-		if (a->top->data >= vars.copy[size - 3] && a->top->data <= vars.copy[size - 1]
-			&& (a->top->data >= vars.inter[0] && a->top->data <= vars.inter[1]))
-			index++;
-		if (a->top->data >= vars.copy[size - 3] && a->top->data <= vars.copy[size - 1])
+		if (check_max_three(a, &vars, size) == 0)
 		{
-			rotate_a(a);
-			print_inst("ra\n");
-		}
-		else if (a->top->data >= vars.inter[0]
-			&& a->top->data <= vars.inter[1])
-		{
-			push_b(a, b);
-			print_inst("pb\n");
-			if (b->top->data < vars.copy[size / 2])
+			if (a->top->data >= vars.inter[0]
+				&& a->top->data <= vars.inter[1])
 			{
-				rotate_b(b);
-				print_inst("rb\n");
+				push_b(a, b);
+				print_inst("pb\n");
+				if (b->top->data < vars.copy[size / 2])
+				{
+					rotate_b(b);
+					print_inst("rb\n");
+				}
+			}
+			else
+			{
+				rotate_a(a);
+				print_inst("ra\n");
 			}
 		}
-		else
-		{
-			rotate_a(a);
-			print_inst("ra\n");
-		}
 	}
+}
+
+void	sort_and_send(t_list *a, t_list *b, t_vars vars)
+{
+	if (!is_sorted(a))
+		three_elements(a);
+	send_to_a(a, b, lst_size(b), vars);
+	free(vars.copy);
 }
 
 t_list	*sort_100(t_list *a, t_list *b, int size, int chunk)
 {
 	t_vars	vars;
-	(void)chunk;
-	vars.copy = malloc(size * sizeof(int));
-	vars.copy = copy_stack(a, vars.copy);
-	vars.copy = bubble_sort(vars.copy, size);
-	vars.key_nbr = chunk;
-	vars.key = vars.key_nbr;
+
+	get_copy_stack(a, &vars, size, chunk);
 	while (lst_size(a) > 3)
 	{
 		vars.inter = interval(vars.key_nbr, vars.copy, size);
-		if (lst_size(a) <= 3)
-			break ;
 		if (size / 2 - vars.key_nbr < 0 && size / 2 + vars.key_nbr > size - 1)
 		{
-			push_b(a, b);
-			print_inst("pb\n");
-			if (b->top->data < vars.copy[size / 2])
+			if (check_max_three(a, &vars, size) == 0)
 			{
-				rotate_b(b);
-				print_inst("rb\n");
+				push_b(a, b);
+				print_inst("pb\n");
+				if (b->top->data < vars.copy[size / 2])
+				{
+					rotate_b(b);
+					print_inst("rb\n");
+				}
 			}
 		}
 		send_to_b(a, b, vars, size);
 		vars.key_nbr += vars.key;
 		free(vars.inter);
 	}
-	if (!is_sorted(a))
-		three_elements(a);
-	size = lst_size(b);
-	send_to_a(a, b, size, vars);
-	free(vars.copy);
+	sort_and_send(a, b, vars);
 	return (a);
 }

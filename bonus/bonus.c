@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:39:51 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/12 18:47:49 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/13 12:48:15 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int argc, char *argv[])
 		instruction = get_next_line(0);
 		while (instruction)
 		{
+			free(instruction);
 			compare_instruction(instruction, a, b);
 			instruction = get_next_line(0);
 		}

@@ -6,7 +6,7 @@
 /*   By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 10:03:17 by het-tale          #+#    #+#             */
-/*   Updated: 2022/06/14 00:46:50 by het-tale         ###   ########.fr       */
+/*   Updated: 2022/06/14 11:35:45 by het-tale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ int	ft_atoi(const char *str)
 	while (str[i] >= 48 && str[i] <= 57)
 	{
 		res = res * 10 + (str[i] - 48);
-		if (res > 2147483647)
-			ft_error2();
 		i++;
 	}
+	if (d == -1 && (long)(res * d) < -2147483648)
+		ft_error2();
+	else if ((long)(res * d) > 2147483647)
+		ft_error2();
 	return ((int)res * d);
 }
